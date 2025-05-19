@@ -1,10 +1,13 @@
 
-import { Link } from "react-router-dom"
-import { Button } from "../ui/button"
-import { ThemeToggle } from "../ThemeToggle"
-
+import { Link, useLocation } from "react-router-dom";
+import { ThemeToggle } from "../ThemeToggle";
+import { Button } from "../ui/button";
 
 export function SiteHeader() {
+ const location = useLocation();
+  const pathname = location.pathname;
+  console.log(pathname);
+  
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between ml-4">

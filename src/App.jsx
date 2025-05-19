@@ -1,16 +1,17 @@
-import { Routes, Route } from "react-router-dom";
-import PublicLayout from "./components/PublicLayout";
-import Landing from "./pages/showCase/Landing";
-import SearchHalls from "./components/ladingPage/SearchHalls";
-import HowItWorks from "./pages/works/HowItWorks";
+import { Route, Routes } from "react-router-dom";
 import ListYourHall from "./components/ladingPage/ListHall";
-import Contact from "./pages/contact/Contact";
-import Register from "./components/ladingPage/Register";
 import SignIn from "./components/ladingPage/Login";
-import AdminDashboardPage from "./pages/admin/Admin";
-import SuperAdminDashboardPage from "./pages/superAdmin/SuperAdmin";
-import OwnerDashboardPage from "./pages/hall-owner/HallOwner";
+import Register from "./components/ladingPage/Register";
+import SearchHalls from "./components/ladingPage/SearchHalls";
 import Layout from "./components/Layout";
+import PublicLayout from "./components/PublicLayout";
+import AdminDashboardPage from "./pages/admin/Admin";
+import Contact from "./pages/contact/Contact";
+import Dashboard from "./pages/dashboard/Dashboard";
+import OwnerDashboardPage from "./pages/hall-owner/HallOwner";
+import Landing from "./pages/showCase/Landing";
+import SuperAdminDashboardPage from "./pages/superAdmin/SuperAdmin";
+import HowItWorks from "./pages/works/HowItWorks";
 import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <Route path="admin" element={<AdminDashboardPage />} />
         <Route path="super-admin" element={<SuperAdminDashboardPage />} />
         <Route path="hall-owner" element={<OwnerDashboardPage />} />
+        <Route path="admin/dashboard" element={<Dashboard />} />
       </Route>
     </Routes>
   );

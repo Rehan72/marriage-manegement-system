@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 export function SiteFooter() {
   return (
      <footer className="border-t w-full bg-background">
-      <div className="container py-12 md:py-16">
+      <div className="container py-12 md:py-16 ml-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center gap-2 font-bold text-xl mb-4">
-              <span className="text-primary">Wedding</span>
-              <span>Haven</span>
+            <div className="flex items-center font-bold text-xl mb-4">
+             <span className="text-primary ">Wedding</span>
+            <span className="text-accent">Haven</span>
             </div>
             <p className="text-muted-foreground mb-4">
               The ultimate platform for finding and booking the perfect marriage hall for your special occasion.

@@ -1,11 +1,9 @@
-import  React from "react"
-import { SiteHeader } from "./ladingPage/Header"
-import { SiteFooter } from "./ladingPage/Footer"
 import { ThemeProvider } from "../hooks/ThemeContext"
-import { UserNav } from "./dashboard/Navbar"
+import { SiteFooter } from "./ladingPage/Footer"
+import { SiteHeader } from "./ladingPage/Header"
 // import SidebarNav from "./dashboard/sidebar-nav"
 import { Outlet } from "react-router-dom"
-import { SidebarNav } from "./dashboard/sidebar-nav"
+import Sidebar from "./Sidebar"
 
 
 export const metadata = {
@@ -25,20 +23,19 @@ export default function Layout({ children }) {
         {/* Header */}
         <SiteHeader />
 
-        {/* Main content area with sidebar and content */}
-        <div className="flex flex-1">
-          {/* Sidebar */}
-          <aside className="w-64 bg-white border-r">
-            <SidebarNav />
-          </aside>
 
-          {/* Main content */}
+         <div className="flex flex-1">
+        <Sidebar />
+      
+       {/* Main content */}
           <div className="flex-1 p-4 md:p-6 bg-app-background">
             <main className="min-h-full">
               <Outlet />
             </main>
           </div>
-        </div>
+      </div>
+        {/* Main content area with sidebar and content */}
+           
 
         {/* Footer stays at the bottom */}
         <SiteFooter />
