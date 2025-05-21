@@ -13,6 +13,7 @@ import Landing from "./pages/showCase/Landing";
 import SuperAdminDashboardPage from "./pages/superAdmin/SuperAdmin";
 import HowItWorks from "./pages/works/HowItWorks";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import BookingDetailPage from "./pages/dashboard/BookingDetails";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="super-admin" element={<SuperAdminDashboardPage />} />
         <Route path="hall-owner" element={<OwnerDashboardPage />} />
         <Route path="admin/dashboard" element={<Dashboard />} />
+        <Route path="dashboard/bookings" element={<BookingDetailPage />} />
       </Route>
     </Routes>
   );
