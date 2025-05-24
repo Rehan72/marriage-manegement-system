@@ -26,6 +26,12 @@ const user = {
       setIsUserLoggedIn(true);
     }
   }, [pathname]);
+
+  const handelLogOut = () => {
+    localStorage.removeItem("token");
+    setIsUserLoggedIn(false);
+    navigator("/sign-in") // Redirect to home page after logout
+  }
   
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -101,7 +107,7 @@ const user = {
                 <Link to="/dashboard/settings">Settings</Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => {}}>Log out</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => {handelLogOut}}>Log out</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

@@ -1,25 +1,22 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-
-import { useState } from "react";
-import { Navigate, useNavigate } from 'react-router-dom';
-import { Link } from "react-router-dom"
-
-import { Button } from "../../components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
-} from "../../components/ui/card";
-import { Input } from "../../components/ui/input";
-import { Label } from "../../components/ui/label";
-import { RadioGroup, RadioGroupItem } from "../../components/ui/radio-group";
-import { Checkbox } from "../../components/ui/checkbox";
+  CardTitle
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Link } from "react-router-dom"; // React Router version
 
 export default function Register() {
-    const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -27,10 +24,10 @@ export default function Register() {
     password: "",
     confirmPassword: "",
     accountType: "user",
-    agreeTerms: false,
+    agreeTerms: false
   });
 
-
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,20 +42,37 @@ export default function Register() {
     setFormData((prev) => ({ ...prev, agreeTerms: checked }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Register with:", formData);
-    navigate.push("/");
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  try {
+    const res = await fetch('http://localhost:5513/api/auth/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      console.log("Registered:", data);
+      navigate("/sign-in");
+    } else {
+      alert(data.message || 'Registration failed');
+    }
+  } catch (error) {
+    console.error("Register error:", error);
+    alert("Network error");
+  }
+};
 
   return (
-    <div className="container py-10 md:py-10 flex justify-center">
+    <div className="container py-16 md:py-24 flex justify-center">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
-          <CardDescription>
-            Enter your information to create an account
-          </CardDescription>
+          <CardDescription>Enter your information to create an account</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">

@@ -23,11 +23,38 @@ export default function SignIn() {
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Sign in with:", { email, password, rememberMe });
-    navigate("/admin");
-  };
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await fetch('http://localhost:5513/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || 'Login failed');
+      return;
+    }
+
+    localStorage.setItem('token', data.token);
+    console.log('Logged in as:', data.role);
+    
+    // Redirect based on role
+    if (data.role === 'superadmin') navigate('/super-admin');
+    else if (data.role === 'admin') navigate('/admin');
+    else if (data.role === 'hall-owner') navigate('/hall-owner');
+    else navigate('/user');
+
+  } catch (err) {
+    console.error('Login error:', err);
+    alert('Something went wrong.');
+  }
+};
+
 
   return (
     <div className="container py-10 md:py-10 flex justify-center">
