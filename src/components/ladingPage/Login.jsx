@@ -16,6 +16,7 @@ import {
 import { Input } from "../../components/ui/input";
 import { Label } from "../../components/ui/label";
 import { Checkbox } from "../../components/ui/checkbox";
+import { hashUserId } from "../../Healper";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -31,6 +32,7 @@ export default function SignIn() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
+      credentials: 'include' // Include credentials for cookies
     });
 
     const data = await res.json();
@@ -40,11 +42,17 @@ export default function SignIn() {
       return;
     }
 
-    localStorage.setItem('token', data.token);
+     localStorage.setItem('token', data.token);
+
+    // Hash userId and store hashedUserId + role
+    const hashedUserId = await hashUserId(data.userId);
+    localStorage.setItem('hashedUserId', hashedUserId);
+    localStorage.setItem('role', data.role);
+
     console.log('Logged in as:', data.role);
     
     // Redirect based on role
-    if (data.role === 'superadmin') navigate('/super-admin');
+    if (data.role === 'superadmin') navigate('/dashboard');
     else if (data.role === 'admin') navigate('/admin');
     else if (data.role === 'hall-owner') navigate('/hall-owner');
     else navigate('/user');

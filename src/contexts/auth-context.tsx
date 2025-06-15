@@ -1,5 +1,6 @@
 "use client"
 
+import api from "@/service/api"
 import { createContext, useContext, useState, useEffect } from "react"
 // import api from "@/services/api"
 import { useNavigate } from "react-router-dom"

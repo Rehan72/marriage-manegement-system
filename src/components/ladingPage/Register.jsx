@@ -50,7 +50,7 @@ const accountTypeSchema = z.object({
   role: z.enum(["user", "hall-owner"], {
     required_error: "Please select an account type",
   }),
-  terms: z.boolean().refine((val) => val === true, {
+  agreeTerms: z.boolean().refine((val) => val === true, {
     message: "You must accept the terms and conditions",
   }),
 });
@@ -74,7 +74,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     lastName: "",
     phone: "",
     role: "user",
-    terms: false,
+    agreeTerms: false,
   });
 
   const { register, loading } = useAuth();
@@ -101,7 +101,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     resolver: zodResolver(accountTypeSchema),
     defaultValues: {
       role: formData.role,
-      terms: formData.terms,
+      agreeTerms: formData.agreeTerms,
     },
   });
 
@@ -144,7 +144,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   };
 
  const handleSubmit = async (e) => {
-  e.preventDefault();
+  if (e?.preventDefault) e.preventDefault();
   
   try {
     const res = await fetch('http://localhost:5513/api/auth/register', {
@@ -336,11 +336,14 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
                 />
                 <FormField
                   control={accountTypeForm.control}
-                  name="terms"
+                  name="agreeTerms"
                   render={({ field }) => (
                     <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                       <FormControl>
-                        <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                        <Checkbox
+  checked={field.value === true}
+  onCheckedChange={(checked) => field.onChange(checked === true)}
+/>
                       </FormControl>
                       <div className="space-y-1 leading-none">
                         <FormLabel>I agree to the terms and conditions</FormLabel>

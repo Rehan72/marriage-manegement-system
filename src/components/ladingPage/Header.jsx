@@ -1,5 +1,5 @@
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ThemeToggle } from "../ThemeToggle";
 import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import { Badge } from "../ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export function SiteHeader() {
+  const navigate = useNavigate()
  const location = useLocation();
   const pathname = location.pathname;
    const roles = ['user', 'hall-owner', 'admin', 'super-admin'];
@@ -27,11 +28,18 @@ const user = {
     }
   }, [pathname]);
 
-  const handelLogOut = () => {
-    localStorage.removeItem("token");
-    setIsUserLoggedIn(false);
-    navigator("/sign-in") // Redirect to home page after logout
-  }
+  const handleLogout = () => {
+  // Remove all relevant items
+  localStorage.removeItem("token");
+  localStorage.removeItem("role");
+  localStorage.removeItem("hashedUserId");
+
+  // Optional: clear *everything* (use with caution)
+  // localStorage.clear();
+
+  setIsUserLoggedIn(false); // Update state
+  navigate("sign-in"); // Redirect to login page
+};
   
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -107,7 +115,7 @@ const user = {
                 <Link to="/dashboard/settings">Settings</Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => {handelLogOut}}>Log out</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

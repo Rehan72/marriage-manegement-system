@@ -29,8 +29,12 @@ const Sidebar = () => {
   const roleSegment = currentPath.split("/")[1]
   const [isOpen, setIsOpen] = useState(true);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
-
+  const [role, setRole] = useState("");
   useEffect(() => {
+    const storedRole = localStorage.getItem("role");
+    if (storedRole) {
+      setRole(storedRole);
+    }
     const handleResize = () => {
       const small = window.innerWidth < 768;
       setIsSmallScreen(small);
@@ -94,24 +98,23 @@ const Sidebar = () => {
   { title: "Settings", path: "/admin/settings", icon: Settings, roles: ["admin"] },
 
   // Super Admin Routes
-  { title: "Dashboard", path: "/super-admin", icon: LayoutDashboard, roles: ["super-admin"] },
-  { title: "Admins", path: "/super-admin/admins", icon: ShieldAlert, roles: ["super-admin"] },
-  { title: "Users", path: "/super-admin/users", icon: Users, roles: ["super-admin"] },
-  { title: "Halls", path: "/super-admin/halls", icon: Building2, roles: ["super-admin"] },
-  { title: "Bookings", path: "/super-admin/bookings", icon: Calendar, roles: ["super-admin"] },
-  { title: "Payments", path: "/super-admin/payments", icon: CreditCard, roles: ["super-admin"] },
-  { title: "Reports", path: "/super-admin/reports", icon: BarChart3, roles: ["super-admin"] },
-  { title: "Locations", path: "/super-admin/locations", icon: Globe, roles: ["super-admin"] },
-  { title: "Database", path: "/super-admin/database", icon: Database, roles: ["super-admin"] },
-  { title: "Logs", path: "/super-admin/logs", icon: FileText, roles: ["super-admin"] },
-  { title: "Permissions", path: "/super-admin/permissions", icon: Lock, roles: ["super-admin"] },
-  { title: "Settings", path: "/super-admin/settings", icon: Settings, roles: ["super-admin"] },
+  { title: "Dashboard", path: "/dashboard", icon: LayoutDashboard, roles: ["superadmin"] },
+  { title: "Admins", path: "/admins", icon: ShieldAlert, roles: ["superadmin"] },
+  { title: "Users", path: "/users", icon: Users, roles: ["superadmin"] },
+  { title: "Halls", path: "/halls", icon: Building2, roles: ["superadmin"] },
+  { title: "Bookings", path: "/bookings", icon: Calendar, roles: ["superadmin"] },
+  { title: "Payments", path: "/payments", icon: CreditCard, roles: ["superadmin"] },
+  { title: "Reports", path: "/reports", icon: BarChart3, roles: ["superadmin"] },
+  { title: "Locations", path: "/locations", icon: Globe, roles: ["superadmin"] },
+  { title: "Database", path: "/database", icon: Database, roles: ["superadmin"] },
+  { title: "Logs", path: "/logs", icon: FileText, roles: ["superadmin"] },
+  { title: "Permissions", path: "/permissions", icon: Lock, roles: ["superadmin"] },
+  { title: "Settings", path: "/settings", icon: Settings, roles: ["superadmin"] },
 ];
 
 
-const filteredRoutes = allRoutes.filter(route =>
-  route.roles.includes(roleSegment)  // optional if URL is tied to role
-);
+const filteredRoutes = allRoutes.filter(route => route.roles.includes(role));
+console.log("Filtered Routes:", filteredRoutes);
 
   return (
     <motion.aside

@@ -5,6 +5,8 @@ import { Button } from "../../components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BarChart3, Building2, CreditCard, Users, ShieldAlert } from "lucide-react"
 import { Link } from "react-router-dom"
+import HallsPage from "./Halls"
+import UsersPage from "./User"
 
 export default function SuperAdminDashboardPage() {
   return (
@@ -227,6 +229,8 @@ export default function SuperAdminDashboardPage() {
             </div>
           </CardContent>
         </Card>
+        <UsersPage />
+        <HallsPage/>
       </div>
     </div>
   )
